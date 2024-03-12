@@ -3,10 +3,11 @@ const gallery = document.querySelector("#gallery");
 const body = document.querySelector("body");
 
 //make fetch request to API
-async function logMovies() {
+async function displayEmployees() {
   const response = await fetch("https://randomuser.me/api/?results=12&?nat=us");
   const employees = await response.json();
   const employeesData = employees.results;
+  console.log(employeesData);
   //create card and add it to the Gallery element
   const createCard = () => {
     let html = "";
@@ -29,12 +30,26 @@ async function logMovies() {
   };
   createCard();
 
-  const employeeCards = document.querySelectorAll(".card");
+  gallery.addEventListener("click", (event) => {
+    const element = event.target;
+    if (element.closest(".card") == null) {
+      return;
+    } else {
+      const card = element.closest(".card");
+      const employeeName = card.querySelector("#name").innerHTML.toLowerCase();
+      //get the employee data
+      employeesData.forEach(employee => {
+        if(`${employee.name.first.toLowerCase()} ${employee.name.last.toLowerCase()}` == employeeName) {
+          //create modal
+          displayModal(employee);
+          addCloseIcon();
+        }
+      })
+    }
+  })
 
-  //loop through cards
-  employeeCards.forEach((card) => {
-    //add click event listener to each card element
-    card.addEventListener("click", (event) => {
+
+  const displayModal = (employee) => {
       //display the modal
       //create modal
       const popUp = document.createElement("div");
@@ -43,26 +58,33 @@ async function logMovies() {
       popUp.innerHTML += `<div class="modal">
         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
         <div class="modal-info-container">
-            <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-            <h3 id="name" class="modal-name cap">name</h3>
-            <p class="modal-text">email</p>
-            <p class="modal-text cap">city</p>
+            <img class="modal-img" src="${employee.picture.large}" alt="profile picture">
+            <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
+            <p class="modal-text">${employee.email}</p>
+            <p class="modal-text cap">City</p>
             <hr>
-            <p class="modal-text">(555) 555-5555</p>
+            <p class="modal-text">${employee.contact}</p>
             <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
             <p class="modal-text">Birthday: 10/21/2015</p>
         </div>
     </div>`;
-      //add modal to the DOM
-      body.insertAdjacentElement("beforeend", popUp);
-      const closeIcon = document.getElementById("modal-close-btn");
-      //add event listener to close icon to hide the modal
-      closeIcon.addEventListener("click", (event) => {
-        const modal = event.target.closest(".modal-container");
-        modal.remove();
-      });
-    });
+       //add modal to the DOM
+       body.insertAdjacentElement("beforeend", popUp);
+
+  }
+
+
+}
+
+displayEmployees();
+
+const addCloseIcon = () => {
+  const closeIcon = document.getElementById("modal-close-btn");
+  //add event listener to close icon to hide the modal
+  closeIcon.addEventListener("click", (event) => {
+    const modal = event.target.closest(".modal-container");
+    modal.remove();
   });
 }
 
-logMovies();
+
