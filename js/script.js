@@ -59,7 +59,7 @@ async function displayEmployees() {
       const streetNumber = employee.location.street.number;
       const streetName = employee.location.street.name;
       const postcode = employee.location.postcode;
-      const dateOfBirth = employee.dob.date;
+      const dateOfBirth = employee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
 
       //create modal
       const popUp = document.createElement("div");
