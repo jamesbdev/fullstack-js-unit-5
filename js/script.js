@@ -50,7 +50,17 @@ async function displayEmployees() {
 
 
   const displayModal = (employee) => {
-      //display the modal
+      const image = employee.picture.large;
+      const firstName = employee.name.first;
+      const lastName = employee.name.last;
+      const email = employee.email;
+      const city = employee.location.city;
+      const phone = employee.phone;
+      const streetNumber = employee.location.street.number;
+      const streetName = employee.location.street.name;
+      const postcode = employee.location.postcode;
+      const dateOfBirth = employee.dob.date;
+
       //create modal
       const popUp = document.createElement("div");
       popUp.classList.add("modal-container");
@@ -58,14 +68,14 @@ async function displayEmployees() {
       popUp.innerHTML += `<div class="modal">
         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
         <div class="modal-info-container">
-            <img class="modal-img" src="${employee.picture.large}" alt="profile picture">
-            <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
-            <p class="modal-text">${employee.email}</p>
-            <p class="modal-text cap">City</p>
+            <img class="modal-img" src="${image}" alt="profile picture">
+            <h3 id="name" class="modal-name cap">${firstName} ${lastName}</h3>
+            <p class="modal-text">${email}</p>
+            <p class="modal-text cap">${city}</p>
             <hr>
-            <p class="modal-text">${employee.contact}</p>
-            <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-            <p class="modal-text">Birthday: 10/21/2015</p>
+            <p class="modal-text">${phone}</p>
+            <p class="modal-text">${streetNumber} ${streetName}, ${city}, ${postcode}</p>
+            <p class="modal-text">Birthday: ${dateOfBirth}</p>
         </div>
     </div>`;
        //add modal to the DOM
