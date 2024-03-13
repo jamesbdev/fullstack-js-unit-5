@@ -48,6 +48,7 @@ async function displayEmployees() {
         ) {
           //show modal with employee data
           displayModal(employee);
+          //add closing icon functionality to the currently opened modal
           addCloseIcon();
         }
       });
@@ -110,25 +111,26 @@ It takes an employee object returned from the data as parameter
     searchContainer.insertAdjacentHTML("afterbegin", searchHTML);
     //get the search input value
     const input = document.querySelector("#search-input");
-    //add event listener to input
+
 
     /* Function to display the searched employee
      */
     const searchEmployee = (event) => {
+      //get the entered value
       const searchValue = event.target.value.toLowerCase();
-      //loop through cards
-      cards.forEach((card) => {
-        const employeeName = card
-          .querySelector("#name")
-          .innerText.toLowerCase();
-        if (searchValue === employeeName) {
-          card.style.display = "flex";
-        } else {
-          card.style.display = "none";
-        }
-      });
+      const employees = document.querySelectorAll("h3.card-name");
+      
+      employees.forEach(employee => {
+        let employeeName = employee.innerText.toLowerCase();
+          if(employeeName.includes(searchValue) || searchValue.trim() == "" ) {
+            employee.parentNode.parentNode.style.display = "flex";
+          } else {
+            employee.parentNode.parentNode.style.display = "none";
+          }
+      })
     };
-    input.addEventListener("change", searchEmployee);
+    //add event listener to input and listen for change
+    input.addEventListener("keyup", searchEmployee);
   };
 
   addSearch();
