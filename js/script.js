@@ -4,10 +4,9 @@ const body = document.querySelector("body");
 
 //make fetch request to API
 async function displayEmployees() {
-  const response = await fetch("https://randomuser.me/api/?results=12&?nat=us");
+  const response = await fetch("https://randomuser.me/api/?results=12&nat=us");
   const employees = await response.json();
   const employeesData = employees.results;
-  console.log(employeesData);
   //create card and add it to the Gallery element
   const createCard = () => {
     let html = "";
@@ -30,6 +29,8 @@ async function displayEmployees() {
   };
   createCard();
 
+  //add click event listener to gallery
+  //open a modal with employee information depending on the clicked element
   gallery.addEventListener("click", (event) => {
     const element = event.target;
     if (element.closest(".card") == null) {
@@ -37,35 +38,45 @@ async function displayEmployees() {
     } else {
       const card = element.closest(".card");
       const employeeName = card.querySelector("#name").innerHTML.toLowerCase();
-      //get the employee data
-      employeesData.forEach(employee => {
-        if(`${employee.name.first.toLowerCase()} ${employee.name.last.toLowerCase()}` == employeeName) {
-          //create modal
+
+      //loop through employees
+      employeesData.forEach((employee) => {
+        //check if the employee name matches the employee name of the clicked element
+        if (
+          `${employee.name.first.toLowerCase()} ${employee.name.last.toLowerCase()}` ==
+          employeeName
+        ) {
+          //show modal with employee data
           displayModal(employee);
           addCloseIcon();
         }
-      })
+      });
     }
-  })
+  });
 
-
+  /* This function creates and displays a modal window that shows the employee data
+It takes an employee object returned from the data as parameter
+*/
   const displayModal = (employee) => {
-      const image = employee.picture.large;
-      const firstName = employee.name.first;
-      const lastName = employee.name.last;
-      const email = employee.email;
-      const city = employee.location.city;
-      const phone = employee.phone;
-      const streetNumber = employee.location.street.number;
-      const streetName = employee.location.street.name;
-      const postcode = employee.location.postcode;
-      const dateOfBirth = employee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
+    const image = employee.picture.large;
+    const firstName = employee.name.first;
+    const lastName = employee.name.last;
+    const email = employee.email;
+    const city = employee.location.city;
+    const phone = employee.phone;
+    const streetNumber = employee.location.street.number;
+    const streetName = employee.location.street.name;
+    const postcode = employee.location.postcode;
+    const dateOfBirth = employee.dob.date
+      .slice(0, 10)
+      .replace("-", "/")
+      .replace("-", "/");
 
-      //create modal
-      const popUp = document.createElement("div");
-      popUp.classList.add("modal-container");
-      //add html for modal
-      popUp.innerHTML += `<div class="modal">
+    //create modal
+    const popUp = document.createElement("div");
+    popUp.classList.add("modal-container");
+    //add html for modal
+    popUp.innerHTML += `<div class="modal">
         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
         <div class="modal-info-container">
             <img class="modal-img" src="${image}" alt="profile picture">
@@ -78,16 +89,56 @@ async function displayEmployees() {
             <p class="modal-text">Birthday: ${dateOfBirth}</p>
         </div>
     </div>`;
-       //add modal to the DOM
-       body.insertAdjacentElement("beforeend", popUp);
+    //add modal to the DOM
+    body.insertAdjacentElement("beforeend", popUp);
+  };
 
-  }
+  /* function that adds a search bar to the DOM 
+   -ability to search for an employee in the gallery
+  */
+  const addSearch = () => {
+    //get the employee cards
+    const cards = document.querySelectorAll(".card");
+    //get the parent container
+    const searchContainer = document.querySelector(".search-container");
+    //create the HTML for the search
+    const searchHTML = `<form action="#" method="get">
+    <input type="search" id="search-input" class="search-input" placeholder="Search...">
+    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+  </form>`;
+    //insert search input in the container
+    searchContainer.insertAdjacentHTML("afterbegin", searchHTML);
+    //get the search input value
+    const input = document.querySelector("#search-input");
+    //add event listener to input
 
+    /* Function to display the searched employee
+     */
+    const searchEmployee = (event) => {
+      const searchValue = event.target.value.toLowerCase();
+      //loop through cards
+      cards.forEach((card) => {
+        const employeeName = card
+          .querySelector("#name")
+          .innerText.toLowerCase();
+        if (searchValue === employeeName) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    };
+    input.addEventListener("change", searchEmployee);
+  };
 
+  addSearch();
 }
 
 displayEmployees();
 
+/* This function adds a close icon in the currently opened modal. 
+  When clicked it closes the modal
+*/
 const addCloseIcon = () => {
   const closeIcon = document.getElementById("modal-close-btn");
   //add event listener to close icon to hide the modal
@@ -95,6 +146,4 @@ const addCloseIcon = () => {
     const modal = event.target.closest(".modal-container");
     modal.remove();
   });
-}
-
-
+};
