@@ -92,6 +92,22 @@ It takes an employee object returned from the data as parameter
     </div>`;
     //add modal to the DOM
     body.insertAdjacentElement("beforeend", popUp);
+
+    //add modal toggle buttons
+const addToggleButtons = () => {
+  //get the modal container 
+  const modalContainer = document.querySelector(".modal-container");
+  
+  let html = `<div class="modal-btn-container">
+  <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+  <button type="button" id="modal-next" class="modal-next btn">Next</button>
+</div>`;
+
+//append to modal container 
+modalContainer.insertAdjacentHTML("beforeend", html);
+}
+
+addToggleButtons();
   };
 
   /* function that adds a search bar to the DOM 
@@ -149,3 +165,7 @@ const addCloseIcon = () => {
     modal.remove();
   });
 };
+
+
+
+
