@@ -38,7 +38,6 @@ async function displayEmployees() {
     } else {
       const card = element.closest(".card");
       const employeeName = card.querySelector("#name").innerHTML.toLowerCase();
-
       //loop through employees
       employeesData.forEach((employee) => {
         //check if the employee name matches the employee name of the clicked element
@@ -68,10 +67,7 @@ It takes an employee object returned from the data as parameter
     const streetNumber = employee.location.street.number;
     const streetName = employee.location.street.name;
     const postcode = employee.location.postcode;
-    const dateOfBirth = employee.dob.date
-      .slice(0, 10)
-      .replace("-", "/")
-      .replace("-", "/");
+    const dateOfBirth = employee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
 
     //create modal
     const popUp = document.createElement("div");
@@ -95,20 +91,76 @@ It takes an employee object returned from the data as parameter
 
     //add modal toggle buttons
 const addToggleButtons = () => {
-  //get the modal container 
-  const modalContainer = document.querySelector(".modal-container");
-  
-  let html = `<div class="modal-btn-container">
-  <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-  <button type="button" id="modal-next" class="modal-next btn">Next</button>
-</div>`;
+    //get the modal container 
+    const modalContainer = document.querySelector(".modal-container");
+    let html = `<div class="modal-btn-container">
+    <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+    <button type="button" id="modal-next" class="modal-next btn">Next</button>
+  </div>`;
 
-//append to modal container 
-modalContainer.insertAdjacentHTML("beforeend", html);
+  //append to modal container 
+  modalContainer.insertAdjacentHTML("beforeend", html);
 }
 
 addToggleButtons();
-  };
+const nextButton = document.getElementById("modal-next");
+const prevButton = document.getElementById("modal-prev");
+//get the current modal's employee name
+const employeeName = document.querySelector(".modal-info-container .modal-name").innerText.toLowerCase();
+/* function that displays the next employee modal */
+const showNextModal = () => {
+      //loop through employee data
+      employeesData.forEach((employee, index) => {
+        //check if the last pop up is being shown
+          //if yes return to avoid showing error message
+        if (index >= 10) {
+          return;
+        }
+        //get the employee full name
+        let dataName = `${employee.name.first.toLowerCase()} ${employee.name.last.toLowerCase()}`;
+          //check if the data matches with the currently selected modal 
+          if (dataName.includes(employeeName)) { 
+            //get the data for the next employee
+            const nextEmployee = employeesData[index + 1];
+            //store modal data
+            const image = nextEmployee.picture.large;
+            const firstName = nextEmployee.name.first;
+            const lastName = nextEmployee.name.last;
+            const email = nextEmployee.email;
+            const city = nextEmployee.location.city;
+            const phone = nextEmployee.phone;
+            const streetNumber = nextEmployee.location.street.number;
+            const streetName = nextEmployee.location.street.name;
+            const postcode = nextEmployee.location.postcode;
+            const dateOfBirth = nextEmployee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
+
+            //get the modal container
+            const modalInfoContainer = document.querySelector(".modal-info-container");
+  
+            //replace the content of the modal with new data from next employee
+            modalInfoContainer.innerHTML = `
+                <img class="modal-img" src="${image}" alt="profile picture">
+                <h3 id="name" class="modal-name cap">${firstName} ${lastName}</h3>
+                <p class="modal-text">${email}</p>
+                <p class="modal-text cap">${city}</p>
+                <hr>
+                <p class="modal-text">${phone}</p>
+                <p class="modal-text">${streetNumber} ${streetName}, ${city}, ${postcode}</p>
+                <p class="modal-text">Birthday: ${dateOfBirth}</p>
+            `;
+          } //end if statement  
+      })//end forEach
+}//end showNextModal function
+
+const showPrevModal = (event) => {
+  console.log(event);
+
+}
+nextButton.addEventListener("click", showNextModal);
+prevButton.addEventListener("click", showPrevModal);
+
+
+};//end displayModal function
 
   /* function that adds a search bar to the DOM 
    -ability to search for an employee in the gallery
@@ -165,6 +217,8 @@ const addCloseIcon = () => {
     modal.remove();
   });
 };
+
+
 
 
 
