@@ -58,6 +58,7 @@ async function displayEmployees() {
 It takes an employee object returned from the data as parameter
 */
   const displayModal = (employee) => {
+    //store variables needed for the modal
     const image = employee.picture.large;
     const firstName = employee.name.first;
     const lastName = employee.name.last;
@@ -105,19 +106,20 @@ const addToggleButtons = () => {
 addToggleButtons();
 const nextButton = document.getElementById("modal-next");
 const prevButton = document.getElementById("modal-prev");
-//get the current modal's employee name
-const employeeName = document.querySelector(".modal-info-container .modal-name").innerText.toLowerCase();
+
+
 /* function that displays the next employee modal */
 const showNextModal = () => {
+  //get the current modal's employee name
+      const employeeName = document.querySelector(".modal-info-container .modal-name").innerText.toLowerCase();
       //loop through employee data
       employeesData.forEach((employee, index) => {
         //check if the last pop up is being shown
-          //if yes return to avoid showing error message
         if (index >= 10) {
           return;
         }
         //get the employee full name
-        let dataName = `${employee.name.first.toLowerCase()} ${employee.name.last.toLowerCase()}`;
+        const dataName = `${employee.name.first.toLowerCase()} ${employee.name.last.toLowerCase()}`;
           //check if the data matches with the currently selected modal 
           if (dataName.includes(employeeName)) { 
             //get the data for the next employee
@@ -152,12 +154,12 @@ const showNextModal = () => {
       })//end forEach
 }//end showNextModal function
 
-const showPrevModal = (event) => {
-  console.log(event);
+  const showPrevModal = (event) => {
+    console.log(event);
+  }
 
-}
-nextButton.addEventListener("click", showNextModal);
-prevButton.addEventListener("click", showPrevModal);
+  nextButton.addEventListener("click", showNextModal);
+  prevButton.addEventListener("click", showPrevModal);
 
 
 };//end displayModal function
@@ -202,7 +204,7 @@ prevButton.addEventListener("click", showPrevModal);
   };
 
   addSearch();
-}
+}//end fetch request function
 
 displayEmployees();
 
