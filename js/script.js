@@ -94,7 +94,7 @@ It takes an employee object returned from the data as parameter
     body.insertAdjacentElement("beforeend", popUp);
 
     //add modal toggle buttons
-const addToggleButtons = () => {
+    const addToggleButtons = () => {
     //get the modal container 
     const modalContainer = document.querySelector(".modal-container");
     let html = `<div class="modal-btn-container">
@@ -118,7 +118,7 @@ const showNextModal = () => {
       //loop through employee data
       employeesData.forEach((employee, index) => {
         //check if the last pop up is being shown
-        if (index >= 10) {
+        if (index >= 11) {
           return;
         }
         //get the employee full name
