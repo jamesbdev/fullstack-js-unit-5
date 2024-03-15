@@ -68,7 +68,10 @@ It takes an employee object returned from the data as parameter
     const streetNumber = employee.location.street.number;
     const streetName = employee.location.street.name;
     const postcode = employee.location.postcode;
+    //change date format
     const dateOfBirth = employee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
+    let [year, month, day] = dateOfBirth.split("/");
+    const newDateOrder = `${month}/${day}/${year}`;
 
     //create modal
     const popUp = document.createElement("div");
@@ -84,7 +87,7 @@ It takes an employee object returned from the data as parameter
             <hr>
             <p class="modal-text">${phone}</p>
             <p class="modal-text">${streetNumber} ${streetName}, ${city}, ${postcode}</p>
-            <p class="modal-text">Birthday: ${dateOfBirth}</p>
+            <p class="modal-text">Birthday: ${newDateOrder}</p>
         </div>
     </div>`;
     //add modal to the DOM
@@ -134,8 +137,10 @@ const showNextModal = () => {
             const streetNumber = nextEmployee.location.street.number;
             const streetName = nextEmployee.location.street.name;
             const postcode = nextEmployee.location.postcode;
-            const dateOfBirth = nextEmployee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
-
+            //change date format
+            const dateOfBirth = employee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
+            let [year, month, day] = dateOfBirth.split("/");
+            const newDateOrder = `${month}/${day}/${year}`;
             //get the modal container
             const modalInfoContainer = document.querySelector(".modal-info-container");
   
@@ -148,7 +153,7 @@ const showNextModal = () => {
                 <hr>
                 <p class="modal-text">${phone}</p>
                 <p class="modal-text">${streetNumber} ${streetName}, ${city}, ${postcode}</p>
-                <p class="modal-text">Birthday: ${dateOfBirth}</p>
+                <p class="modal-text">Birthday: ${newDateOrder}</p>
             `;
           } //end if statement  
       })//end forEach
@@ -178,7 +183,10 @@ const showNextModal = () => {
           const streetNumber = nextEmployee.location.street.number;
           const streetName = nextEmployee.location.street.name;
           const postcode = nextEmployee.location.postcode;
-          const dateOfBirth = nextEmployee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
+          //change date format
+          const dateOfBirth = employee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
+          let [year, month, day] = dateOfBirth.split("/");
+          const newDateOrder = `${month}/${day}/${year}`;
 
           //get the modal container
           const modalInfoContainer = document.querySelector(".modal-info-container");
@@ -192,7 +200,7 @@ const showNextModal = () => {
               <hr>
               <p class="modal-text">${phone}</p>
               <p class="modal-text">${streetNumber} ${streetName}, ${city}, ${postcode}</p>
-              <p class="modal-text">Birthday: ${dateOfBirth}</p>
+              <p class="modal-text">Birthday: ${newDateOrder}</p>
           `;
         } //end if statement  
     })//end forEach
