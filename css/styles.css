@@ -4,6 +4,13 @@
 
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
+:root {
+    --main-bg-color: #47AA39;
+    --light-green: #60FC49;
+    --bright-pink: #FF01AE;
+    --dark-pink: #BF3092;
+  }
+
 * {
 	box-sizing: border-box;
 }
@@ -16,7 +23,7 @@ html, body {
 body {
     font-family: "Nunito", sans-serif;
     text-align: center;
-    background: rgba(235, 235, 235, 0.9);
+    background: var(--main-bg-color);
 }
 
 header {
@@ -87,7 +94,8 @@ header h1 {
     padding: 10px;
     background: rgba(245, 245, 245, 0.9);
     border-radius: 0.25em;
-    border: 1px solid rgba(50, 50, 50, 0.3);
+    border: 1px solid var(--light-green);
+    box-shadow: 5px 5px 10px #303030;
     transition: .4s ease-out;
     overflow: hidden;
 }
@@ -150,9 +158,9 @@ header h1 {
     right: 15px;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.9);
-    background: rgba(0, 0, 0, 0.8);
+    background: var(--main-bg-color);
     border-radius: 0.25em;
-    border: 1px solid rgba(50, 50, 50, 0.3);
+    border: 1px solid var(--light-green);
 }
 
 .modal-img {
@@ -198,9 +206,10 @@ header h1 {
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.9);
     padding: 0.75em 1.5em;
-    background: rgba(0, 0, 0, 0.8);
+    background: var(--bright-pink);
     border-radius: 0.35em;
     transition: .4s ease-out;
+    border: none;
   }
   
 
@@ -245,7 +254,7 @@ header h1 {
 
     .card:hover {
         background: rgba(255, 255, 255, 1);
-        border: 1px solid rgba(50, 50, 50, 0.9);
+        border: 1px solid var(--bright-pink);
     }
 
     .card:hover .card-text {
@@ -253,7 +262,7 @@ header h1 {
     }
 
     .btn:hover {
-        background: rgba(255, 255, 255, 1);
+        background: var(--light-green);
         color: rgba(25, 25, 25, 1); 
     }
 }
