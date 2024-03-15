@@ -2,8 +2,6 @@
    Public API Request
 ======================================== */
 
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 :root {
     --main-bg-color: #47AA39;
     --light-green: #60FC49;
@@ -21,7 +19,7 @@ html, body {
 }
 
 body {
-    font-family: "Nunito", sans-serif;
+    font-family: "Roboto Mono", monospace;
     text-align: center;
     background: var(--main-bg-color);
 }
