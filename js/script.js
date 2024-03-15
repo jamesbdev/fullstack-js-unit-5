@@ -155,7 +155,48 @@ const showNextModal = () => {
 }//end showNextModal function
 
   const showPrevModal = (event) => {
-    console.log(event);
+    //get the current modal employee name
+    const employeeName = document.querySelector(".modal-info-container .modal-name").innerText.toLowerCase();
+    employeesData.forEach((employee, index) => {
+      //check if the first modal is being shown
+      if (index <= 0) {
+        return;
+      }
+      //get the employee full name
+      const dataName = `${employee.name.first.toLowerCase()} ${employee.name.last.toLowerCase()}`;
+        //check if the data matches with the currently selected modal 
+        if (dataName.includes(employeeName)) { 
+          //get the data for the next employee
+          const nextEmployee = employeesData[index - 1];
+          //store modal data
+          const image = nextEmployee.picture.large;
+          const firstName = nextEmployee.name.first;
+          const lastName = nextEmployee.name.last;
+          const email = nextEmployee.email;
+          const city = nextEmployee.location.city;
+          const phone = nextEmployee.phone;
+          const streetNumber = nextEmployee.location.street.number;
+          const streetName = nextEmployee.location.street.name;
+          const postcode = nextEmployee.location.postcode;
+          const dateOfBirth = nextEmployee.dob.date.slice(0, 10).replace("-", "/").replace("-", "/");
+
+          //get the modal container
+          const modalInfoContainer = document.querySelector(".modal-info-container");
+
+          //replace the content of the modal with new data from next employee
+          modalInfoContainer.innerHTML = `
+              <img class="modal-img" src="${image}" alt="profile picture">
+              <h3 id="name" class="modal-name cap">${firstName} ${lastName}</h3>
+              <p class="modal-text">${email}</p>
+              <p class="modal-text cap">${city}</p>
+              <hr>
+              <p class="modal-text">${phone}</p>
+              <p class="modal-text">${streetNumber} ${streetName}, ${city}, ${postcode}</p>
+              <p class="modal-text">Birthday: ${dateOfBirth}</p>
+          `;
+        } //end if statement  
+    })//end forEach
+
   }
 
   nextButton.addEventListener("click", showNextModal);
